@@ -497,6 +497,11 @@ public final class NotificationHandlerUtil implements PushConstants {
         setNotificationOngoing(extras, mBuilder);
 
         /*
+         * Notification group
+         */
+        setNotificationGroup(extras, mBuilder);
+
+        /*
          * Notification count
          */
         setVisibility(context, extras, mBuilder);
@@ -506,6 +511,7 @@ public final class NotificationHandlerUtil implements PushConstants {
          */
         createActions(context, extras, mBuilder, resources, packageName, notId);
 
+        Log.d(LOG_TAG,"EXTRAS: " + extras.toString());
         mNotificationManager.notify(appName, notId, mBuilder.build());
     }
 
@@ -877,6 +883,12 @@ public final class NotificationHandlerUtil implements PushConstants {
         }
     }
 
+    private static void setNotificationGroup(Bundle extras, NotificationCompat.Builder mBuilder) {
+        String group = extras.getString(GROUP);
+        if (group != null) {
+            mBuilder.setGroup(group);
+        }
+    }
 
     private static void setVisibility(Context context, Bundle extras, NotificationCompat.Builder mBuilder) {
         String visibilityStr = extras.getString(VISIBILITY);
